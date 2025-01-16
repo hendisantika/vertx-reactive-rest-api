@@ -1,5 +1,6 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.service;
 
+import id.my.hendisantika.vertx_reactive_rest_api.api.model.Book;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetAllResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetByIdResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.repository.BookRepository;
@@ -80,5 +81,21 @@ public class BookService {
         })
       .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Read one book", success)))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Read one book", throwable.getMessage())));
+  }
+
+  /**
+   * Create one book
+   *
+   * @param book Book
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> create(Book book) {
+    return dbClient.withTransaction(
+        connection -> {
+          return bookRepository.insert(connection, book)
+            .map(BookGetByIdResponse::new);
+        })
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Create one book", success)))
+      .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Create one book", throwable.getMessage())));
   }
 }
