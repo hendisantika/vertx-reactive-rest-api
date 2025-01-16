@@ -9,6 +9,13 @@ import io.vertx.json.schema.SchemaRouter;
 import io.vertx.json.schema.SchemaRouterOptions;
 import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
 
+import static io.vertx.json.schema.common.dsl.Keywords.maxLength;
+import static io.vertx.json.schema.common.dsl.Keywords.minLength;
+import static io.vertx.json.schema.common.dsl.Schemas.intSchema;
+import static io.vertx.json.schema.common.dsl.Schemas.objectSchema;
+import static io.vertx.json.schema.common.dsl.Schemas.stringSchema;
+import static io.vertx.json.schema.draft7.dsl.Keywords.maximum;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : vertx-reactive-rest-api
@@ -104,6 +111,18 @@ public class BookValidationHandler {
 
   private SchemaParser buildSchemaParser() {
     return SchemaParser.createDraft7SchemaParser(SchemaRouter.create(vertx, new SchemaRouterOptions()));
+  }
+
+  private ObjectSchemaBuilder buildBodySchemaBuilder() {
+    return objectSchema()
+      .requiredProperty("author", stringSchema().with(minLength(1)).with(maxLength(255)))
+      .requiredProperty("country", stringSchema().with(minLength(1)).with(maxLength(255)).nullable())
+      .requiredProperty("image_link", stringSchema().with(minLength(1)).with(maxLength(255)).nullable())
+      .requiredProperty("language", stringSchema().with(minLength(1)).with(maxLength(255)).nullable())
+      .requiredProperty("link", stringSchema().with(minLength(1)).with(maxLength(255)).nullable())
+      .requiredProperty("pages", intSchema().with(maximum(10000)).nullable())
+      .requiredProperty("title", stringSchema().with(minLength(1)).with(maxLength(255)))
+      .requiredProperty("year", intSchema().with(maximum(10000)).nullable());
   }
 
 }
