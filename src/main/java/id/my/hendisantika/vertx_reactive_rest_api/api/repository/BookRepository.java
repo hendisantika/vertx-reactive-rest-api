@@ -1,7 +1,7 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.repository;
 
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.Book;
-import id.my.hendisantika.vertx_reactive_rest_api.api.utils.LogUtils;
+import id.my.hendisantika.vertx_reactive_rest_api.utils.LogUtils;
 import io.vertx.core.Future;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;

@@ -1,6 +1,6 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.handler;
 
-import id.my.hendisantika.vertx_reactive_rest_api.api.utils.ResponseUtils;
+import id.my.hendisantika.vertx_reactive_rest_api.utils.ResponseUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.validation.BadRequestException;
 import io.vertx.ext.web.validation.BodyProcessorException;

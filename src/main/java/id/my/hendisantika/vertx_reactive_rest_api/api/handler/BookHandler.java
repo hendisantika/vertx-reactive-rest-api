@@ -4,7 +4,7 @@ import id.my.hendisantika.vertx_reactive_rest_api.api.model.Book;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetAllResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetByIdResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.service.BookService;
-import id.my.hendisantika.vertx_reactive_rest_api.api.utils.ResponseUtils;
+import id.my.hendisantika.vertx_reactive_rest_api.utils.ResponseUtils;
 import io.vertx.core.Future;
 import io.vertx.ext.web.RoutingContext;
 

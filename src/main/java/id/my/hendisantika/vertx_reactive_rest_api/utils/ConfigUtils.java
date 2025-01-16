@@ -1,4 +1,4 @@
-package id.my.hendisantika.vertx_reactive_rest_api.api.utils;
+package id.my.hendisantika.vertx_reactive_rest_api.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
