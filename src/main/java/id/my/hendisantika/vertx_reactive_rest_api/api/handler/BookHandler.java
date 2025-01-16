@@ -1,5 +1,6 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.handler;
 
+import id.my.hendisantika.vertx_reactive_rest_api.api.model.Book;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetAllResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetByIdResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.service.BookService;
@@ -58,6 +59,22 @@ public class BookHandler {
 
     return bookService.readOne(Integer.parseInt(id))
       .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
+      .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
+  }
+
+  /**
+   * Create one book
+   * It should return 201 Created in case of success
+   * It should return 400 Bad Request, 404 Not Found or 500 Internal Server Error in case of failure
+   *
+   * @param rc Routing context
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> create(RoutingContext rc) {
+    final Book book = rc.getBodyAsJson().mapTo(Book.class);
+
+    return bookService.create(book)
+      .onSuccess(success -> ResponseUtils.buildCreatedResponse(rc, success))
       .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
   }
 }
