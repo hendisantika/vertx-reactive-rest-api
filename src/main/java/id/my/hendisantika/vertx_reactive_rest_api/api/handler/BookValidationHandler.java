@@ -131,4 +131,8 @@ public class BookValidationHandler {
     return Parameters.param("id", intSchema());
   }
 
+  private ParameterProcessorFactory buildPageQueryParameter() {
+    return Parameters.optionalParam("page", intSchema());
+  }
+
 }
