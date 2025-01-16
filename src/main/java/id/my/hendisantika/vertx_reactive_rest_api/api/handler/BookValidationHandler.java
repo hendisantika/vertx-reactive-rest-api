@@ -35,4 +35,18 @@ public class BookValidationHandler {
       .queryParameter(buildLimitQueryParameter())
       .build();
   }
+
+  /**
+   * Build read one book request validation
+   *
+   * @return ValidationHandler
+   */
+  public ValidationHandler readOne() {
+    final SchemaParser schemaParser = buildSchemaParser();
+
+    return ValidationHandler
+      .builder(schemaParser)
+      .pathParameter(buildIdPathParameter())
+      .build();
+  }
 }
