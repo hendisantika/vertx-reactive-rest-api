@@ -98,4 +98,24 @@ public class BookService {
       .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Create one book", success)))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Create one book", throwable.getMessage())));
   }
+
+  /**
+   * Update one book
+   *
+   * @param id   Book ID
+   * @param book Book
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> update(int id,
+                                            Book book) {
+    book.setId(id);
+
+    return dbClient.withTransaction(
+        connection -> {
+          return bookRepository.update(connection, book)
+            .map(BookGetByIdResponse::new);
+        })
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Update one book", success)))
+      .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Update one book", throwable.getMessage())));
+  }
 }
