@@ -68,4 +68,21 @@ public class BookValidationHandler {
       .body(Bodies.json(schemaBuilder))
       .build();
   }
+
+  /**
+   * Build update one book request validation
+   *
+   * @return ValidationHandler
+   */
+  public ValidationHandler update() {
+    final SchemaParser schemaParser = buildSchemaParser();
+    final ObjectSchemaBuilder schemaBuilder = buildBodySchemaBuilder();
+
+    return ValidationHandler
+      .builder(schemaParser)
+      .predicate(RequestPredicate.BODY_REQUIRED)
+      .body(Bodies.json(schemaBuilder))
+      .pathParameter(buildIdPathParameter())
+      .build();
+  }
 }
