@@ -94,4 +94,20 @@ public class BookHandler {
       .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
       .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
   }
+
+  /**
+   * Delete one book
+   * It should return 204 No Content in case of success
+   * It should return 400 Bad Request, 404 Not Found or 500 Internal Server Error in case of failure
+   *
+   * @param rc Routing context
+   * @return BookGetByIdResponse
+   */
+  public Future<Void> delete(RoutingContext rc) {
+    final String id = rc.pathParam(ID_PARAMETER);
+
+    return bookService.delete(Integer.parseInt(id))
+      .onSuccess(success -> ResponseUtils.buildNoContentResponse(rc))
+      .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
+  }
 }
