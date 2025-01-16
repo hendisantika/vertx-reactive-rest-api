@@ -33,4 +33,9 @@ public class MainVerticle extends AbstractVerticle {
       .flatMap(vertx::undeploy);
   }
 
+  private Future<String> deployApiVerticle(Vertx vertx) {
+    return vertx.deployVerticle(ApiVerticle.class.getName());
+  }
+
+
 }
