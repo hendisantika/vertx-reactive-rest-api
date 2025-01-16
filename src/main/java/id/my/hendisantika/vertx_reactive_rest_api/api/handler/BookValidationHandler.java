@@ -1,6 +1,8 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.handler;
 
 import io.vertx.core.Vertx;
+import io.vertx.ext.web.validation.ValidationHandler;
+import io.vertx.json.schema.SchemaParser;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,5 +19,20 @@ public class BookValidationHandler {
 
   public BookValidationHandler(Vertx vertx) {
     this.vertx = vertx;
+  }
+
+  /**
+   * Build read all books request validation
+   *
+   * @return ValidationHandler
+   */
+  public ValidationHandler readAll() {
+    final SchemaParser schemaParser = buildSchemaParser();
+
+    return ValidationHandler
+      .builder(schemaParser)
+      .queryParameter(buildPageQueryParameter())
+      .queryParameter(buildLimitQueryParameter())
+      .build();
   }
 }
