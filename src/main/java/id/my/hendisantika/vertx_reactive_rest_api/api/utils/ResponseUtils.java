@@ -1,5 +1,8 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.utils;
 
+import io.vertx.core.json.Json;
+import io.vertx.ext.web.RoutingContext;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : vertx-reactive-rest-api
@@ -16,5 +19,19 @@ public class ResponseUtils {
 
   private ResponseUtils() {
 
+  }
+
+  /**
+   * Build success response using 200 OK as its status code and response as its body
+   *
+   * @param rc       Routing context
+   * @param response Response body
+   */
+  public static void buildOkResponse(RoutingContext rc,
+                                     Object response) {
+    rc.response()
+      .setStatusCode(200)
+      .putHeader(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+      .end(Json.encodePrettily(response));
   }
 }
