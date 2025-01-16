@@ -34,4 +34,18 @@ public class ResponseUtils {
       .putHeader(CONTENT_TYPE_HEADER, APPLICATION_JSON)
       .end(Json.encodePrettily(response));
   }
+
+  /**
+   * Build success response using 201 Created as its status code and response as its body
+   *
+   * @param rc       Routing context
+   * @param response Response body
+   */
+  public static void buildCreatedResponse(RoutingContext rc,
+                                          Object response) {
+    rc.response()
+      .setStatusCode(201)
+      .putHeader(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+      .end(Json.encodePrettily(response));
+  }
 }
