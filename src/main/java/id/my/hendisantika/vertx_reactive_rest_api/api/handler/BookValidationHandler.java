@@ -85,4 +85,18 @@ public class BookValidationHandler {
       .pathParameter(buildIdPathParameter())
       .build();
   }
+
+  /**
+   * Build delete one book request validation
+   *
+   * @return ValidationHandler
+   */
+  public ValidationHandler delete() {
+    final SchemaParser schemaParser = buildSchemaParser();
+
+    return ValidationHandler
+      .builder(schemaParser)
+      .pathParameter(buildIdPathParameter())
+      .build();
+  }
 }
