@@ -19,7 +19,7 @@
     <jackson.version>2.12.0</jackson.version>
     <flyway.version>11.2.0</flyway.version>
     <postgresql.version>42.2.18</postgresql.version>
-    <micrometer.version>1.6.3</micrometer.version>
+    <micrometer.version>1.14.3</micrometer.version>
     <testcontainers.version>1.20.4</testcontainers.version>
     <jacoco-plugin.version>0.8.6</jacoco-plugin.version>
 
