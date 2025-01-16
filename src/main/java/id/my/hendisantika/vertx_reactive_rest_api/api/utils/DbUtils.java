@@ -1,5 +1,11 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.utils;
 
+import io.vertx.core.Vertx;
+import io.vertx.pgclient.PgConnectOptions;
+import io.vertx.pgclient.PgPool;
+
+import java.util.Properties;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : vertx-reactive-rest-api
@@ -18,6 +24,26 @@ public class DbUtils {
   private static final String PASSWORD_CONFIG = "datasource.password";
 
   private DbUtils() {
+  }
 
+  /**
+   * Build DB client that is used to manage a pool of connections
+   *
+   * @param vertx Vertx context
+   * @return PostgreSQL pool
+   */
+  public static PgPool buildDbClient(Vertx vertx) {
+    final Properties properties = ConfigUtils.getInstance().getProperties();
+
+    final PgConnectOptions connectOptions = new PgConnectOptions()
+      .setPort(Integer.parseInt(properties.getProperty(PORT_CONFIG)))
+      .setHost(properties.getProperty(HOST_CONFIG))
+      .setDatabase(properties.getProperty(DATABASE_CONFIG))
+      .setUser(properties.getProperty(USERNAME_CONFIG))
+      .setPassword(properties.getProperty(PASSWORD_CONFIG));
+
+    final PoolOptions poolOptions = new PoolOptions().setMaxSize(5);
+
+    return PgPool.pool(vertx, connectOptions, poolOptions);
   }
 }
