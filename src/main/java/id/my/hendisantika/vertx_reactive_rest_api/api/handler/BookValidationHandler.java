@@ -5,6 +5,8 @@ import io.vertx.ext.web.validation.RequestPredicate;
 import io.vertx.ext.web.validation.ValidationHandler;
 import io.vertx.ext.web.validation.builder.Bodies;
 import io.vertx.json.schema.SchemaParser;
+import io.vertx.json.schema.SchemaRouter;
+import io.vertx.json.schema.SchemaRouterOptions;
 import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
 
 /**
@@ -99,4 +101,9 @@ public class BookValidationHandler {
       .pathParameter(buildIdPathParameter())
       .build();
   }
+
+  private SchemaParser buildSchemaParser() {
+    return SchemaParser.createDraft7SchemaParser(SchemaRouter.create(vertx, new SchemaRouterOptions()));
+  }
+
 }
