@@ -117,4 +117,28 @@ public class BookRepository {
       .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Insert book", SQL_INSERT)))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Insert book", throwable.getMessage())));
   }
+
+  /**
+   * Update one book
+   *
+   * @param connection PostgreSQL connection
+   * @param book       Book
+   * @return Book
+   */
+  public Future<Book> update(SqlConnection connection,
+                             Book book) {
+    return SqlTemplate
+      .forUpdate(connection, SQL_UPDATE)
+      .mapFrom(Book.class)
+      .execute(book)
+      .flatMap(rowSet -> {
+        if (rowSet.rowCount() > 0) {
+          return Future.succeededFuture(book);
+        } else {
+          throw new NoSuchElementException(LogUtils.NO_BOOK_WITH_ID_MESSAGE.buildMessage(book.getId()));
+        }
+      })
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Update book", SQL_UPDATE)))
+      .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Update book", throwable.getMessage())));
+  }
 }
