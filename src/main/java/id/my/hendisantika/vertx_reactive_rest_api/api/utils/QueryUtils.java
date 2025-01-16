@@ -42,4 +42,20 @@ public class QueryUtils {
       : Math.min(Integer.parseInt(limit), DEFAULT_LIMIT);
   }
 
+  /**
+   * Calculate offset
+   *
+   * @param page  Sanitized page
+   * @param limit Sanitized limit
+   * @return Offset
+   */
+  public static int getOffset(int page,
+                              int limit) {
+    if ((page - 1) * limit >= 0) {
+      return (page - 1) * limit;
+    } else {
+      throw new NumberFormatException(LogUtils.NULL_OFFSET_ERROR_MESSAGE.buildMessage(page, limit));
+    }
+  }
+
 }
