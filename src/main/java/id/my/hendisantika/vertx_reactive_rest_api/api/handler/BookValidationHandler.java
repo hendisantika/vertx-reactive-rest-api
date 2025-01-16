@@ -135,4 +135,8 @@ public class BookValidationHandler {
     return Parameters.optionalParam("page", intSchema());
   }
 
+  private ParameterProcessorFactory buildLimitQueryParameter() {
+    return Parameters.optionalParam("limit", intSchema());
+  }
+
 }
