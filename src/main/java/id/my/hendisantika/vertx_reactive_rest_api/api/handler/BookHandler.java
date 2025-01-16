@@ -1,6 +1,7 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.handler;
 
 import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetAllResponse;
+import id.my.hendisantika.vertx_reactive_rest_api.api.model.BookGetByIdResponse;
 import id.my.hendisantika.vertx_reactive_rest_api.api.service.BookService;
 import id.my.hendisantika.vertx_reactive_rest_api.api.utils.ResponseUtils;
 import io.vertx.core.Future;
@@ -40,6 +41,22 @@ public class BookHandler {
     final String limit = rc.queryParams().get(LIMIT_PARAMETER);
 
     return bookService.readAll(page, limit)
+      .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
+      .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
+  }
+
+  /**
+   * Read one book
+   * It should return 200 OK in case of success
+   * It should return 400 Bad Request, 404 Not Found or 500 Internal Server Error in case of failure
+   *
+   * @param rc Routing context
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> readOne(RoutingContext rc) {
+    final String id = rc.pathParam(ID_PARAMETER);
+
+    return bookService.readOne(Integer.parseInt(id))
       .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
       .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
   }
