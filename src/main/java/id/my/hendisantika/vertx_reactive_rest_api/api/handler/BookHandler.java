@@ -77,4 +77,21 @@ public class BookHandler {
       .onSuccess(success -> ResponseUtils.buildCreatedResponse(rc, success))
       .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
   }
+
+  /**
+   * Update one book
+   * It should return 200 OK in case of success
+   * It should return 400 Bad Request, 404 Not Found or 500 Internal Server Error in case of failure
+   *
+   * @param rc Routing context
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> update(RoutingContext rc) {
+    final String id = rc.pathParam(ID_PARAMETER);
+    final Book book = rc.getBodyAsJson().mapTo(Book.class);
+
+    return bookService.update(Integer.parseInt(id), book)
+      .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
+      .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
+  }
 }
