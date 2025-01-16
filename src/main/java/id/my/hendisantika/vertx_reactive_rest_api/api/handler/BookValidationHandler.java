@@ -4,6 +4,8 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.web.validation.RequestPredicate;
 import io.vertx.ext.web.validation.ValidationHandler;
 import io.vertx.ext.web.validation.builder.Bodies;
+import io.vertx.ext.web.validation.builder.ParameterProcessorFactory;
+import io.vertx.ext.web.validation.builder.Parameters;
 import io.vertx.json.schema.SchemaParser;
 import io.vertx.json.schema.SchemaRouter;
 import io.vertx.json.schema.SchemaRouterOptions;
@@ -123,6 +125,10 @@ public class BookValidationHandler {
       .requiredProperty("pages", intSchema().with(maximum(10000)).nullable())
       .requiredProperty("title", stringSchema().with(minLength(1)).with(maxLength(255)))
       .requiredProperty("year", intSchema().with(maximum(10000)).nullable());
+  }
+
+  private ParameterProcessorFactory buildIdPathParameter() {
+    return Parameters.param("id", intSchema());
   }
 
 }
