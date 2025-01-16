@@ -6,6 +6,8 @@ import id.my.hendisantika.vertx_reactive_rest_api.api.repository.BookRepository;
 import id.my.hendisantika.vertx_reactive_rest_api.api.utils.LogUtils;
 import id.my.hendisantika.vertx_reactive_rest_api.api.utils.QueryUtils;
 import io.vertx.core.Future;
+import io.vertx.core.impl.logging.Logger;
+import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.pgclient.PgPool;
 
 import java.util.List;
@@ -62,5 +64,21 @@ public class BookService {
         })
       .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Read all books", success.getBooks())))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Read all books", throwable.getMessage())));
+  }
+
+  /**
+   * Read one book
+   *
+   * @param id Book ID
+   * @return BookGetByIdResponse
+   */
+  public Future<BookGetByIdResponse> readOne(int id) {
+    return dbClient.withTransaction(
+        connection -> {
+          return bookRepository.selectById(connection, id)
+            .map(BookGetByIdResponse::new);
+        })
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Read one book", success)))
+      .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Read one book", throwable.getMessage())));
   }
 }
