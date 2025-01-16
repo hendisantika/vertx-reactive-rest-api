@@ -1,5 +1,7 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.router;
 
+import id.my.hendisantika.vertx_reactive_rest_api.api.handler.BookHandler;
+import id.my.hendisantika.vertx_reactive_rest_api.api.handler.BookValidationHandler;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
