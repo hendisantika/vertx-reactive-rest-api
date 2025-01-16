@@ -1,6 +1,7 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.router;
 
 import io.vertx.core.Vertx;
+import io.vertx.ext.web.Router;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,5 +24,14 @@ public class BookRouter {
     this.vertx = vertx;
     this.bookHandler = bookHandler;
     this.bookValidationHandler = bookValidationHandler;
+  }
+
+  /**
+   * Set books API routes
+   *
+   * @param router Router
+   */
+  public void setRouter(Router router) {
+    router.mountSubRouter("/api/v1", buildBookRouter());
   }
 }
