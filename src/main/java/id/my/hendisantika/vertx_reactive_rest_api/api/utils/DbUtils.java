@@ -3,6 +3,9 @@ package id.my.hendisantika.vertx_reactive_rest_api.api.utils;
 import io.vertx.core.Vertx;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.PoolOptions;
+import org.flywaydb.core.api.configuration.Configuration;
+import org.flywaydb.core.api.configuration.FluentConfiguration;
 
 import java.util.Properties;
 
@@ -45,5 +48,18 @@ public class DbUtils {
     final PoolOptions poolOptions = new PoolOptions().setMaxSize(5);
 
     return PgPool.pool(vertx, connectOptions, poolOptions);
+  }
+
+  /**
+   * Build Flyway configuration that is used to run migrations
+   *
+   * @return Flyway configuration
+   */
+  public static Configuration buildMigrationsConfiguration() {
+    final Properties properties = ConfigUtils.getInstance().getProperties();
+
+    final String url = "jdbc:postgresql://" + properties.getProperty(HOST_CONFIG) + ":" + properties.getProperty(PORT_CONFIG) + "/" + properties.getProperty(DATABASE_CONFIG);
+
+    return new FluentConfiguration().dataSource(url, properties.getProperty(USERNAME_CONFIG), properties.getProperty(PASSWORD_CONFIG));
   }
 }
