@@ -1,5 +1,7 @@
 package id.my.hendisantika.vertx_reactive_rest_api.api.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -30,6 +32,29 @@ public class ConfigUtils {
   }
 
   public Properties getProperties() {
+    return properties;
+  }
+
+  /**
+   * Read application.properties file on resources folder
+   *
+   * @return Properties
+   */
+  private Properties readProperties() {
+    Properties properties = new Properties();
+
+    try {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("application.properties")) {
+        try {
+          properties.load(is);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
     return properties;
   }
 }
