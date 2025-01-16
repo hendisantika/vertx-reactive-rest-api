@@ -89,4 +89,32 @@ public class BookRepository {
       .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Read book by id", SQL_SELECT_BY_ID)))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Read book by id", throwable.getMessage())));
   }
+
+  /**
+   * Create one book
+   *
+   * @param connection PostgreSQL connection
+   * @param book       Book
+   * @return Book
+   */
+  public Future<Book> insert(SqlConnection connection,
+                             Book book) {
+    return SqlTemplate
+      .forUpdate(connection, SQL_INSERT)
+      .mapFrom(Book.class)
+      .mapTo(Book.class)
+      .execute(book)
+      .map(rowSet -> {
+        final RowIterator<Book> iterator = rowSet.iterator();
+
+        if (iterator.hasNext()) {
+          book.setId(iterator.next().getId());
+          return book;
+        } else {
+          throw new IllegalStateException(LogUtils.CANNOT_CREATE_BOOK_MESSAGE.buildMessage());
+        }
+      })
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Insert book", SQL_INSERT)))
+      .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Insert book", throwable.getMessage())));
+  }
 }
