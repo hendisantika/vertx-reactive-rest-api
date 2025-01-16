@@ -30,4 +30,16 @@ public class QueryUtils {
       : Math.max(Integer.parseInt(page), DEFAULT_PAGE);
   }
 
+  /**
+   * Calculate limit value
+   *
+   * @param limit Limit
+   * @return Sanitized limit
+   */
+  public static int getLimit(String limit) {
+    return (limit == null)
+      ? DEFAULT_LIMIT
+      : Math.min(Integer.parseInt(limit), DEFAULT_LIMIT);
+  }
+
 }
