@@ -18,4 +18,16 @@ public class QueryUtils {
 
   }
 
+  /**
+   * Calculate page value
+   *
+   * @param page Page
+   * @return Sanitized page
+   */
+  public static int getPage(String page) {
+    return (page == null)
+      ? DEFAULT_PAGE
+      : Math.max(Integer.parseInt(page), DEFAULT_PAGE);
+  }
+
 }
