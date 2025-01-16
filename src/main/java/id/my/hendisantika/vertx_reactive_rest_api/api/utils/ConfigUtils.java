@@ -17,4 +17,19 @@ public class ConfigUtils {
 
   private final Properties properties;
 
+  private ConfigUtils() {
+    this.properties = readProperties();
+  }
+
+  public static ConfigUtils getInstance() {
+    if (instance == null) {
+      instance = new ConfigUtils();
+    }
+
+    return instance;
+  }
+
+  public Properties getProperties() {
+    return properties;
+  }
 }
