@@ -24,7 +24,7 @@
     <jacoco-plugin.version>0.8.6</jacoco-plugin.version>
 
     <vertx.version>4.5.13</vertx.version>
-    <junit-jupiter.version>5.11.4</junit-jupiter.version>
+    <junit-jupiter.version>5.12.0</junit-jupiter.version>
 
     <main.verticle>id.my.hendisantika.vertx_reactive_rest_api.verticle.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
