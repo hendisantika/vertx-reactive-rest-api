@@ -17,7 +17,7 @@
     <exec-maven-plugin.version>3.6.1</exec-maven-plugin.version>
 
     <jackson.version>2.20</jackson.version>
-    <flyway.version>11.14.0</flyway.version>
+    <flyway.version>11.14.1</flyway.version>
     <postgresql.version>42.7.8</postgresql.version>
     <micrometer.version>1.15.5</micrometer.version>
     <testcontainers.version>1.21.3</testcontainers.version>
