@@ -23,7 +23,7 @@
     <testcontainers.version>1.21.3</testcontainers.version>
     <jacoco-plugin.version>0.8.6</jacoco-plugin.version>
 
-    <vertx.version>5.0.4</vertx.version>
+    <vertx.version>5.0.5</vertx.version>
     <junit-jupiter.version>6.0.0</junit-jupiter.version>
 
     <main.verticle>id.my.hendisantika.vertx_reactive_rest_api.verticle.MainVerticle</main.verticle>
