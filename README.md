@@ -3,7 +3,7 @@
 [![Java CI with Maven](https://github.com/hendisantika/vertx-reactive-rest-api/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/vertx-reactive-rest-api/actions/workflows/maven.yml)
 ![Java](https://img.shields.io/badge/Java-25-orange.svg?logo=openjdk)
 [![Vert.x](https://img.shields.io/badge/vert.x-5.2.2-purple.svg)](https://vertx.io)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791.svg?logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-336791.svg?logo=postgresql&logoColor=white)
 ![Dependabot](https://img.shields.io/badge/dependabot-enabled-025E8C.svg?logo=dependabot)
 
 A fully reactive RESTful web service (Books CRUD) built with **Eclipse Vert.x 5** on **JDK 25**, backed by PostgreSQL.
@@ -20,7 +20,7 @@ It covers production-ready concerns such as request validation, database migrati
 | Language             | Java 25 (`maven.compiler.release=25`)                      |
 | Toolkit              | Eclipse Vert.x 5.2.2 (`vertx-stack-depchain`)              |
 | Web                  | `vertx-web`, `vertx-web-validation` (JSON Schema Draft 7)  |
-| Database             | PostgreSQL 17, `vertx-pg-client`, SQL Client Templates     |
+| Database             | PostgreSQL 18, `vertx-pg-client`, SQL Client Templates     |
 | Migrations           | Flyway 13 (`flyway-core` + `flyway-database-postgresql`)   |
 | JSON                 | Jackson (managed by `jackson-bom`)                         |
 | Health / Metrics     | `vertx-health-check`, Micrometer + Prometheus              |
@@ -43,6 +43,11 @@ It covers production-ready concerns such as request validation, database migrati
 
    Connection settings live in `src/main/resources/application.properties`
    (`localhost:5432`, database `books`). Flyway runs the migrations and seeds data on startup.
+
+   > **Upgrading from PostgreSQL 17?** The Postgres 18 image stores data under `/var/lib/postgresql/18/docker`,
+   > so `compose.yml` now mounts the volume at `/var/lib/postgresql`. An old volume created by PostgreSQL 17 is not
+   > compatible — recreate it with `docker compose down -v && docker compose up -d` (the sample data is re-seeded by
+   > Flyway) or migrate it with `pg_upgrade`.
 
 2. Run the tests:
 

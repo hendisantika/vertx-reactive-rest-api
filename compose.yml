@@ -9,7 +9,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # Postgres 18+ stores data in /var/lib/postgresql/<major>/docker
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:
