@@ -19,8 +19,9 @@ updates:
       - dependencies
       - java
     commit-message:
-      prefix: "chore(deps)"
-      prefix-development: "chore(deps-dev)"
+      # with include: scope -> "chore(deps): ..." / "chore(deps-dev): ..."
+      prefix: "chore"
+      prefix-development: "chore"
       include: scope
     groups:
       vertx:
@@ -64,7 +65,9 @@ updates:
       - dependencies
       - github_actions
     commit-message:
-      prefix: "ci(deps)"
+      # with include: scope -> "ci(deps): ..."
+      prefix: "ci"
+      include: scope
     groups:
       github-actions:
         patterns:
