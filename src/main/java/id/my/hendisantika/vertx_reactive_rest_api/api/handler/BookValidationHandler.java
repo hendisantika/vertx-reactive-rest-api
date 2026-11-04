@@ -6,17 +6,18 @@ import io.vertx.ext.web.validation.ValidationHandler;
 import io.vertx.ext.web.validation.builder.Bodies;
 import io.vertx.ext.web.validation.builder.ParameterProcessorFactory;
 import io.vertx.ext.web.validation.builder.Parameters;
-import io.vertx.json.schema.SchemaParser;
-import io.vertx.json.schema.SchemaRouter;
-import io.vertx.json.schema.SchemaRouterOptions;
+import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder;
+import io.vertx.json.schema.Draft;
+import io.vertx.json.schema.JsonSchemaOptions;
+import io.vertx.json.schema.SchemaRepository;
 import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
 
 import static io.vertx.json.schema.common.dsl.Keywords.maxLength;
+import static io.vertx.json.schema.common.dsl.Keywords.maximum;
 import static io.vertx.json.schema.common.dsl.Keywords.minLength;
 import static io.vertx.json.schema.common.dsl.Schemas.intSchema;
 import static io.vertx.json.schema.common.dsl.Schemas.objectSchema;
 import static io.vertx.json.schema.common.dsl.Schemas.stringSchema;
-import static io.vertx.json.schema.draft7.dsl.Keywords.maximum;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,10 +42,10 @@ public class BookValidationHandler {
    * @return ValidationHandler
    */
   public ValidationHandler readAll() {
-    final SchemaParser schemaParser = buildSchemaParser();
+    final SchemaRepository schemaRepository = buildSchemaRepository();
 
-    return ValidationHandler
-      .builder(schemaParser)
+    return ValidationHandlerBuilder
+      .create(schemaRepository)
       .queryParameter(buildPageQueryParameter())
       .queryParameter(buildLimitQueryParameter())
       .build();
@@ -56,10 +57,10 @@ public class BookValidationHandler {
    * @return ValidationHandler
    */
   public ValidationHandler readOne() {
-    final SchemaParser schemaParser = buildSchemaParser();
+    final SchemaRepository schemaRepository = buildSchemaRepository();
 
-    return ValidationHandler
-      .builder(schemaParser)
+    return ValidationHandlerBuilder
+      .create(schemaRepository)
       .pathParameter(buildIdPathParameter())
       .build();
   }
@@ -70,11 +71,11 @@ public class BookValidationHandler {
    * @return ValidationHandler
    */
   public ValidationHandler create() {
-    final SchemaParser schemaParser = buildSchemaParser();
+    final SchemaRepository schemaRepository = buildSchemaRepository();
     final ObjectSchemaBuilder schemaBuilder = buildBodySchemaBuilder();
 
-    return ValidationHandler
-      .builder(schemaParser)
+    return ValidationHandlerBuilder
+      .create(schemaRepository)
       .predicate(RequestPredicate.BODY_REQUIRED)
       .body(Bodies.json(schemaBuilder))
       .build();
@@ -86,11 +87,11 @@ public class BookValidationHandler {
    * @return ValidationHandler
    */
   public ValidationHandler update() {
-    final SchemaParser schemaParser = buildSchemaParser();
+    final SchemaRepository schemaRepository = buildSchemaRepository();
     final ObjectSchemaBuilder schemaBuilder = buildBodySchemaBuilder();
 
-    return ValidationHandler
-      .builder(schemaParser)
+    return ValidationHandlerBuilder
+      .create(schemaRepository)
       .predicate(RequestPredicate.BODY_REQUIRED)
       .body(Bodies.json(schemaBuilder))
       .pathParameter(buildIdPathParameter())
@@ -103,16 +104,18 @@ public class BookValidationHandler {
    * @return ValidationHandler
    */
   public ValidationHandler delete() {
-    final SchemaParser schemaParser = buildSchemaParser();
+    final SchemaRepository schemaRepository = buildSchemaRepository();
 
-    return ValidationHandler
-      .builder(schemaParser)
+    return ValidationHandlerBuilder
+      .create(schemaRepository)
       .pathParameter(buildIdPathParameter())
       .build();
   }
 
-  private SchemaParser buildSchemaParser() {
-    return SchemaParser.createDraft7SchemaParser(SchemaRouter.create(vertx, new SchemaRouterOptions()));
+  private SchemaRepository buildSchemaRepository() {
+    return SchemaRepository.create(new JsonSchemaOptions()
+      .setDraft(Draft.DRAFT7)
+      .setBaseUri("app://"));
   }
 
   private ObjectSchemaBuilder buildBodySchemaBuilder() {

@@ -6,6 +6,7 @@ import io.micrometer.prometheusmetrics.PrometheusConfig;
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
+import io.vertx.micrometer.MicrometerMetricsFactory;
 import io.vertx.micrometer.MicrometerMetricsOptions;
 import io.vertx.micrometer.VertxPrometheusOptions;
 
@@ -26,12 +27,14 @@ public class Main {
     PrometheusMeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
     new UptimeMetrics().bindTo(registry);
 
-    final Vertx vertx = Vertx.vertx(new VertxOptions().setMetricsOptions(
-      new MicrometerMetricsOptions()
-        .setPrometheusOptions(new VertxPrometheusOptions().setEnabled(true))
-        .setJvmMetricsEnabled(true)
-        .setMicrometerRegistry(registry)
-        .setEnabled(true)));
+    final Vertx vertx = Vertx.builder()
+      .with(new VertxOptions().setMetricsOptions(
+        new MicrometerMetricsOptions()
+          .setPrometheusOptions(new VertxPrometheusOptions().setEnabled(true))
+          .setJvmMetricsEnabled(true)
+          .setEnabled(true)))
+      .withMetrics(new MicrometerMetricsFactory(registry))
+      .build();
 
     vertx.deployVerticle(MainVerticle.class.getName())
       .onFailure(throwable -> System.exit(-1));

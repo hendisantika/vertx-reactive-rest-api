@@ -7,9 +7,9 @@ import id.my.hendisantika.vertx_reactive_rest_api.api.repository.BookRepository;
 import id.my.hendisantika.vertx_reactive_rest_api.utils.LogUtils;
 import id.my.hendisantika.vertx_reactive_rest_api.utils.QueryUtils;
 import io.vertx.core.Future;
-import io.vertx.core.impl.logging.Logger;
-import io.vertx.core.impl.logging.LoggerFactory;
-import io.vertx.pgclient.PgPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.vertx.sqlclient.Pool;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 public class BookService {
   private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 
-  private final PgPool dbClient;
+  private final Pool dbClient;
   private final BookRepository bookRepository;
 
-  public BookService(PgPool dbClient,
+  public BookService(Pool dbClient,
                      BookRepository bookRepository) {
     this.dbClient = dbClient;
     this.bookRepository = bookRepository;

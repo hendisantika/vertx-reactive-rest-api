@@ -19,7 +19,7 @@ public enum LogUtils {
   RUN_HTTP_SERVER_SUCCESS_MESSAGE("HTTP server running on port %s"),
   RUN_HTTP_SERVER_ERROR_MESSAGE("Cannot run HTTP server"),
   NULL_OFFSET_ERROR_MESSAGE("Offset can't be null. Page %s and limit %s"),
-  RUN_APP_SUCCESSFULLY_MESSAGE("vertx-4-reactive-rest-api started successfully in %d ms");
+  RUN_APP_SUCCESSFULLY_MESSAGE("vertx-reactive-rest-api started successfully in %d ms");
 
   private final String message;
 

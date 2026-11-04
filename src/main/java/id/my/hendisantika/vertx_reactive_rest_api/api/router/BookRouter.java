@@ -37,7 +37,7 @@ public class BookRouter {
    * @param router Router
    */
   public void setRouter(Router router) {
-    router.mountSubRouter("/api/v1", buildBookRouter());
+    router.route("/api/v1/*").subRouter(buildBookRouter());
   }
 
   /**

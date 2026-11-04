@@ -4,10 +4,21 @@ import id.my.hendisantika.vertx_reactive_rest_api.utils.LogUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
+import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
-import io.vertx.core.impl.logging.Logger;
-import io.vertx.core.impl.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * Created by IntelliJ IDEA.
+ * Project : vertx-reactive-rest-api
+ * User: hendisantika
+ * Email: hendisantika@gmail.com
+ * Telegram : @hendisantika34
+ * Link : s.id/hendisantika
+ * Date: 05/11/26
+ * Time: 05.46
+ */
 public class MainVerticle extends AbstractVerticle {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
@@ -24,7 +35,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private Future<Void> deployMigrationVerticle(Vertx vertx) {
     final DeploymentOptions options = new DeploymentOptions()
-      .setWorker(true)
+      .setThreadingModel(ThreadingModel.WORKER)
       .setWorkerPoolName("migrations-worker-pool")
       .setInstances(1)
       .setWorkerPoolSize(1);
